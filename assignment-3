@@ -1,0 +1,209 @@
+Question-10 (Unit-4)
+Write a C program to count vowels and consonants in a String using pointer
+Solution:-
+
+#include <stdio.h>
+  
+void count_vowels_and_consonant(char* str)
+{
+    int vowels = 0, consonants = 0;
+  
+    int i;
+    char ch;
+  
+    for (i = 0; str[i] != '\0'; i++) {
+  
+        ch = str[i];
+  
+        if (ch == 'a' || ch == 'e'
+            || ch == 'i' || ch == 'o'
+            || ch == 'u' || ch == 'A'
+            || ch == 'E' || ch == 'I'
+            || ch == 'O' || ch == 'U')
+            vowels++;
+  
+        else if (ch == ' ')
+            continue;
+  
+        else
+            consonants++;
+    }
+    printf("\nVowels: %d", vowels);
+    printf("\nConsonants: %d", consonants);
+}  
+
+int main()
+{
+    char* str = "Gyanendar Kuamr Tiwari";
+    printf("String: %s", str);
+  
+    count_vowels_and_consonant(str);
+  
+    return 0;
+}
+Output:- 
+String: Gyanendar Kumar Tiwari
+Vowels: 8
+Consonants: 12
+
+Question-4 (Unit-4)
+Write a Program to find greatest number in an array using pointers.
+Solution:-
+#include <stdio.h>
+ 
+int main()
+{
+  long array[100], *maximum, size, c, location = 1;
+ 
+  printf("Enter the number of elements in array\n");
+  scanf("%ld", &size);
+ 
+  printf("Enter %ld integers\n", size);
+ 
+  for ( c = 0 ; c < size ; c++ )
+    scanf("%ld", &array[c]);
+ 
+  maximum  = array;
+  *maximum = *array;
+ 
+  for (c = 1; c < size; c++)
+  {
+    if (*(array+c) > *maximum)
+    {
+       *maximum = *(array+c);
+       location = c+1;
+    }
+  }
+ 
+  printf("Maximum element is present at location number %ld and it's value is %ld.\n", location, *maximum);
+  return 0;
+}
+Output:-
+Enter the number of elements in array
+5
+Enter 5 integers
+3
+5
+12
+65
+13
+Maximum element is present at location number 4 and it's value is 65.
+
+
+Question-4 (Unit-5)
+Write a C program to read the contents of two text files and merge the contents and
+write it into one file.
+Solution:-
+
+#include <stdio.h>
+#include <stdlib.h>
+int main()
+{
+  FILE *fs1, *fs2, *ft;
+
+  char ch, file1[20], file2[20], file3[20];
+
+  printf("Enter name of first file\n");
+  gets(file1);
+
+  printf("Enter name of second file\n");
+  gets(file2);
+
+  printf("Enter name of file which will store contents of the two files\n");
+  gets(file3);
+
+  fs1 = fopen(file1, "r");
+  fs2 = fopen(file2, "r");
+
+  if (fs1 == NULL || fs2 == NULL)
+  {
+    perror("Error ");
+    printf("Press any key to exit...\n");
+    exit(EXIT_FAILURE);
+  }
+
+  ft = fopen(file3, "w"); // Opening in write mode
+
+  if (ft == NULL)
+  {
+    perror("Error ");
+    printf("Press any key to exit...\n");
+    exit(EXIT_FAILURE);
+  }
+
+  while ((ch = fgetc(fs1)) != EOF)
+    fputc(ch,ft);
+
+  while ((ch = fgetc(fs2)) != EOF)
+    fputc(ch,ft);
+
+  printf("The two files were merged into %s file successfully.\n", file3);
+
+  fclose(fs1);
+  fclose(fs2);
+  fclose(ft);
+
+  return 0;
+}
+Output:-
+enter the name of first file
+data.c
+enter the name of second file 
+factorial.c
+enter the name of file which will store the content of the two file
+data-factorial.c
+The two files were merged into data-factorial.c file successfully.
+
+
+Question-12 (UNit-5)
+Write a c program for Reading file contents and appending the same into an existing
+file.
+
+Solution:-
+#include <stdio.h>
+
+void appendFiles(char source[],char destination[])
+{
+	FILE *fp1, *fp2;
+
+	fp1 = fopen(source, "a+");
+	fp2 = fopen(destination, "a+");
+
+	if (!fp1 && !fp2) {
+		printf("Unable to open/"
+			"detect file(s)\n");
+		return;
+	}
+
+	char buf[100];
+
+	fprintf(fp2, "\n");
+
+	while (!feof(fp1)) {
+		fgets(buf, sizeof(buf), fp1);
+		fprintf(fp2, "%s", buf);
+	}
+
+	rewind(fp2);
+
+	while (!feof(fp2)) {
+		fgets(buf, sizeof(buf), fp2);
+		printf("%s", buf);
+	}
+}
+
+int main()
+{
+	char source[] = "file1.txt",
+		destination[] = "file2.txt";
+
+	// calling Function with file names.
+	appendFiles(source, destination);
+
+	return 0;
+}
+Output:-
+This is the line one in file2
+Programming is fun.
+This is the line one in file1
+Hello world.
